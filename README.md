@@ -1,14 +1,12 @@
 # Bellepros Growth Tool
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://YOUR-APP-NAME.streamlit.app)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/Konstadinos1/bellepros-growth-tool/main/app.py)
 
 French-language Streamlit app for QSR growth assessment, expansion prioritization, competitive analysis, and downloadable PDF reporting.
 
 ## Live App
 
-- URL: `https://YOUR-APP-NAME.streamlit.app`
-
-Replace `YOUR-APP-NAME` with your actual Streamlit Cloud app URL after deployment.
+- URL: `https://share.streamlit.io/Konstadinos1/bellepros-growth-tool/main/app.py`
 
 ## Run Locally
 
