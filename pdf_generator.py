@@ -260,31 +260,31 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
     pdf.rect(0, 40, 210, 80, "F")
 
     pdf.set_y(50)
-    pdf.set_font("DejaVu", "B", 28)
+    pdf.set_font(pdf._font_name, "B", 28)
     pdf.set_text_color(*BLANC)
     pdf.cell(0, 15, "Console de Croissance", align="C", ln=True)
-    pdf.set_font("DejaVu", "B", 22)
+    pdf.set_font(pdf._font_name, "B", 22)
     pdf.cell(0, 12, org_name, align="C", ln=True)
 
     pdf.ln(5)
-    pdf.set_font("DejaVu", "", 14)
+    pdf.set_font(pdf._font_name, "", 14)
     pdf.cell(0, 10, "Stratégie d'expansion QSR — Province de Québec", align="C", ln=True)
 
     pdf.set_y(130)
     pdf.set_text_color(*NOIR)
-    pdf.set_font("DejaVu", "B", 18)
+    pdf.set_font(pdf._font_name, "B", 18)
     pdf.cell(0, 12, f"Score Global : {overall:.0f}/100   {stars}", align="C", ln=True)
     pdf.ln(3)
-    pdf.set_font("DejaVu", "", 14)
+    pdf.set_font(pdf._font_name, "", 14)
     pdf.set_text_color(*ROUGE)
     pdf.cell(0, 10, tier["label"], align="C", ln=True)
-    pdf.set_font("DejaVu", "", 11)
+    pdf.set_font(pdf._font_name, "", 11)
     pdf.set_text_color(100, 100, 100)
     pdf.cell(0, 8, tier["desc"], align="C", ln=True)
 
     pdf.ln(15)
     pdf.set_text_color(130, 130, 130)
-    pdf.set_font("DejaVu", "", 10)
+    pdf.set_font(pdf._font_name, "", 10)
     pdf.cell(0, 8, f"Rapport généré le {datetime.now().strftime('%d %B %Y à %H:%M')}", align="C", ln=True)
     pdf.cell(0, 8, f"Dimensions évaluées : {len(assessment['dimensions_assessed'])}", align="C", ln=True)
 
@@ -295,7 +295,7 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
     pdf.section_title("Sommaire Exécutif")
 
     # Score table
-    pdf.set_font("DejaVu", "B", 9)
+    pdf.set_font(pdf._font_name, "B", 9)
     col_widths = [65, 20, 25, 80]
 
     # Header row
@@ -307,7 +307,7 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
     pdf.cell(col_widths[3], 8, "Lacune principale", border=1, fill=True, align="C")
     pdf.ln()
 
-    pdf.set_font("DejaVu", "", 8)
+    pdf.set_font(pdf._font_name, "", 8)
     pdf.set_text_color(*NOIR)
     for i, dim_key in enumerate(assessment["dimensions_assessed"]):
         res = assessment["dimension_results"][dim_key]
@@ -367,12 +367,12 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
         pdf.sub_title(f"{res['name']} — {res['score']:.0f}% ({res['priority']})")
 
         if res["gaps"]:
-            pdf.set_font("DejaVu", "B", 9)
+            pdf.set_font(pdf._font_name, "B", 9)
             pdf.cell(0, 6, "Lacunes :", ln=True)
             for g in res["gaps"]:
                 pdf.bullet(g)
         if res["recommendations"]:
-            pdf.set_font("DejaVu", "B", 9)
+            pdf.set_font(pdf._font_name, "B", 9)
             pdf.cell(0, 6, "Recommandations :", ln=True)
             for r in res["recommendations"]:
                 pdf.bullet(r)
@@ -387,7 +387,7 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
     regions = assessment["regions"]
 
     # Region table
-    pdf.set_font("DejaVu", "B", 8)
+    pdf.set_font(pdf._font_name, "B", 8)
     rcols = [45, 22, 25, 22, 25, 25, 12]
     pdf.set_fill_color(*BLEU_FONCE)
     pdf.set_text_color(*BLANC)
@@ -395,7 +395,7 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
         pdf.cell(w, 7, header, border=1, fill=True, align="C")
     pdf.ln()
 
-    pdf.set_font("DejaVu", "", 7)
+    pdf.set_font(pdf._font_name, "", 7)
     pdf.set_text_color(*NOIR)
     for i, reg in enumerate(regions):
         bg = GRIS_CLAIR if i % 2 == 0 else BLANC
@@ -445,9 +445,9 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
     medals = ["#1", "#2", "#3"]
     for i, reg in enumerate(regions[:3]):
         medal = medals[i]
-        pdf.set_font("DejaVu", "B", 10)
+        pdf.set_font(pdf._font_name, "B", 10)
         pdf.cell(0, 7, f"{medal} {reg['name']} — {reg['priority']}", ln=True)
-        pdf.set_font("DejaVu", "", 9)
+        pdf.set_font(pdf._font_name, "", 9)
         pdf.cell(10)
         pdf.cell(0, 6, f"Population : {reg['population']:,} | Densité QSR : {reg['densite']} | Loyer : {reg['loyer']:.0f}$/pi²", ln=True)
         pdf.cell(10)
@@ -472,7 +472,7 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
         pass
 
     # Competitor table
-    pdf.set_font("DejaVu", "B", 8)
+    pdf.set_font(pdf._font_name, "B", 8)
     ccols = [30, 18, 22, 50, 50]
     pdf.set_fill_color(*BLEU_FONCE)
     pdf.set_text_color(*BLANC)
@@ -480,7 +480,7 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
         pdf.cell(w, 7, header, border=1, fill=True, align="C")
     pdf.ln()
 
-    pdf.set_font("DejaVu", "", 7)
+    pdf.set_font(pdf._font_name, "", 7)
     pdf.set_text_color(*NOIR)
     for i, comp in enumerate(assessment["competitors"]):
         bg = GRIS_CLAIR if i % 2 == 0 else BLANC
@@ -514,7 +514,7 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
     pdf.sub_title("Opportunités Identifiées")
     for comp in assessment["competitors"]:
         if comp["opportunites"]:
-            pdf.set_font("DejaVu", "B", 9)
+            pdf.set_font(pdf._font_name, "B", 9)
             pdf.cell(0, 6, f"{comp['name']} :", ln=True)
             for opp in comp["opportunites"]:
                 pdf.bullet(opp)
@@ -545,12 +545,12 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
         pdf.set_fill_color(*color)
         pdf.rect(pdf.l_margin, pdf.get_y(), 3, 8, "F")
         pdf.cell(6)
-        pdf.set_font("DejaVu", "B", 11)
+        pdf.set_font(pdf._font_name, "B", 11)
         pdf.set_text_color(*BLEU_FONCE)
         pdf.cell(0, 8, title, ln=True)
         pdf.ln(2)
 
-        pdf.set_font("DejaVu", "", 9)
+        pdf.set_font(pdf._font_name, "", 9)
         pdf.set_text_color(*NOIR)
         for item in items:
             if pdf.get_y() > 270:
@@ -561,7 +561,7 @@ def generate_pdf(assessment: Dict[str, Any], org_name: str = "Bellepros") -> byt
 
     # Footer timestamp
     pdf.ln(10)
-    pdf.set_font("DejaVu", "", 8)
+    pdf.set_font(pdf._font_name, "", 8)
     pdf.set_text_color(150, 150, 150)
     pdf.cell(0, 6, f"Rapport généré par la Console de Croissance Bellepros — {datetime.now().strftime('%Y-%m-%d %H:%M')}", align="C")
 
