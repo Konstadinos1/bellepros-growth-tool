@@ -15,6 +15,11 @@ import plotly.graph_objects as go
 
 def _find_dejavu_font(style: str = "") -> str:
     """Find DejaVu font path across different OS/environments."""
+    name = "DejaVuSans-Bold.ttf" if style == "B" else "DejaVuSans.ttf"
+    # Check bundled fonts/ directory first (works on Streamlit Cloud)
+    bundled = Path(__file__).parent / "fonts" / name
+    if bundled.exists():
+        return str(bundled)
     if style == "B":
         candidates = [
             "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
@@ -33,7 +38,6 @@ def _find_dejavu_font(style: str = "") -> str:
     # Fallback: try to find it anywhere
     for root in ["/usr/share/fonts", "/usr/local/share/fonts"]:
         if os.path.isdir(root):
-            name = "DejaVuSans-Bold.ttf" if style == "B" else "DejaVuSans.ttf"
             for dirpath, _, filenames in os.walk(root):
                 if name in filenames:
                     return os.path.join(dirpath, name)
